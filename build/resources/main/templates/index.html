@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>SmartPlate</title>
+  <title>Food Analyzer</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>SmartPlate</h1>
+<header>
+  <h1>Food Analyzer</h1>
+  <nav>
+    <ul>
+      <li><a th:href="@{/}">홈</a></li>
+      <li><a href="#">사용법</a></li>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">연락처</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="welcome">
+    <h2>음식 사진을 업로드하여 종류와 양을 분석하세요!</h2>
+    <a class="btn btn-primary" th:href="@{/upload}">음식 사진 업로드</a>
+  </section>
+
+  <section class="preview">
+    <!-- 미리보기 섹션 내용 -->
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2024 Food Analyzer. All rights reserved.</p>
+  <p>
+    <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">Instagram</a>
+  </p>
+</footer>
 </body>
 </html>

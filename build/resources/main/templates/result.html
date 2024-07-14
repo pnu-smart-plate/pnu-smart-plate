@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div>
+  <h1>분석 결과</h1>
+</div>
+
+<main>
+  <section class="results">
+    <h2>업로드된 사진</h2>
+    <div>
+      <img th:src="@{${foodInfo.imageUrl}}" alt="분석된 사진">
+    </div>
+<!--    <div th:text="@{${foodInfo.imageUrl}}"></div>-->
+
+    <h2>분석된 결과</h2>
+    <p>음식 종류: <span id="food-type" th:text="${foodInfo.foodType}"></span></p>
+    <p>음식 양: <span id="food-amount" th:text="${foodInfo.foodAmount}"></span></p>
+
+    <form th:action="@{/submit-result}" method="post">
+      <label for="custom-amount">직접 입력:</label>
+      <select id="custom-amount" name="customAmount">
+        <option value="적음">적음</option>
+        <option value="보통">보통</option>
+        <option value="많음">많음</option>
+      </select>
+      <button type="submit">결과 제출</button>
+    </form>
+  </section>
+</main>
+</body>
+</html>
+
