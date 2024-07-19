@@ -1,40 +1,35 @@
-<!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>분석 결과</title>
+  <script src="result.js"></script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div>
+<header>
   <h1>분석 결과</h1>
-</div>
-
+</header>
 <main>
   <section class="results">
     <h2>업로드된 사진</h2>
-    <div>
-      <img th:src="@{${foodInfo.imageUrl}}" alt="분석된 사진">
+    <div id="uploaded-image">
+      <img id="result-image" style="max-width: 100%; height: auto;">
     </div>
-<!--    <div th:text="@{${foodInfo.imageUrl}}"></div>-->
-
     <h2>분석된 결과</h2>
-    <p>음식 종류: <span id="food-type" th:text="${foodInfo.foodType}"></span></p>
-    <p>음식 양: <span id="food-amount" th:text="${foodInfo.foodAmount}"></span></p>
-
-    <form th:action="@{/submit-result}" method="post">
-      <label for="custom-amount">직접 입력:</label>
-      <select id="custom-amount" name="customAmount">
-        <option value="적음">적음</option>
-        <option value="보통">보통</option>
-        <option value="많음">많음</option>
-      </select>
-      <button type="submit">결과 제출</button>
-    </form>
+    <p>음식 종류: <span id="food-type">미정</span></p>
+    <p>음식 양: <span id="food-amount">미정</span></p>
+    <label for="custom-type">직접 입력:</label>
+    <input type="text" id="custom-type" placeholder="음식 종류">
+    <label for="custom-amount">직접 입력:</label>
+    <select id="custom-amount">
+      <option value="적음">적음</option>
+      <option value="보통">보통</option>
+      <option value="많음">많음</option>
+    </select>
+    <button onclick="submitResults()">결과 제출</button>
   </section>
 </main>
+
 </body>
 </html>
-
