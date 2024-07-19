@@ -21,9 +21,6 @@ public class FoodAnalysisController {
 
     private final FoodAnalysisService foodAnalysisService;
 
-    // 업로드 디렉토리 설정
-    @Value("${file.upload-dir}")
-    private String uploadDir;
 
     @Autowired
     public FoodAnalysisController(FoodAnalysisService foodAnalysisService) {
@@ -40,38 +37,31 @@ public class FoodAnalysisController {
         return "upload";
     }
 
-    @PostMapping("/analyze")
+    @GetMapping("/result")
+    public String showResult(){
+        return "result";
+    }
+
+    @PostMapping("/result")
     public String analyze(@RequestParam("imageFile") MultipartFile imageFile, Model model) {
         if (!imageFile.isEmpty()) {
             try {
-                // 고유한 파일명 생성
-                String originalFileName = imageFile.getOriginalFilename();
-                String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-                String fileName = UUID.randomUUID().toString() + extension;
-
-                // 파일 저장 경로 설정
-                String filePath = uploadDir + fileName;
-
-                // 파일 저장
-                Path path = Paths.get(filePath);
-                Files.createDirectories(path.getParent());
-                Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
+                // 이미지 저장
+                String fileName = foodAnalysisService.saveImg(imageFile);
                 // 분석 수행
-                FoodInfo foodInfo = foodAnalysisService.analyzeImage("/uploads/"+fileName);
+                FoodInfo foodInfo = foodAnalysisService.analyzeImage("/uploads/" + fileName);
+
                 model.addAttribute("foodInfo", foodInfo);
                 return "result";
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 // 오류 처리
                 model.addAttribute("error", "이미지 업로드 및 분석 중 오류가 발생했습니다.");
-                return "upload";
+                return "result";
             }
         } else {
             model.addAttribute("error", "이미지 파일을 선택해주세요.");
             return "upload";
         }
-
-
     }
 }
