@@ -1,27 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Food Analyzer</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header>
-  <h1>Food Analyzer</h1>
-  <nav>
-    <ul>
-      <li><a th:href="@{/}">홈</a></li>
-      <li><a href="#">사용법</a></li>
-      <li><a href="#">FAQ</a></li>
-      <li><a href="#">연락처</a></li>
-    </ul>
-  </nav>
-</header>
+
+
 
 <main>
-  <section class="welcome">
-    <h2>음식 사진을 업로드하여 종류와 양을 분석하세요!</h2>
-    <a class="btn btn-primary" th:href="@{/upload}">음식 사진 업로드</a>
+  <section class="container">
+    <div class="header">사진 업로드</div>
+    <div class="image-container" id="imageContainer"></div>
+    <div class="options">
+      <div class="option" onclick="document.getElementById('fileInput').click()">
+        카메라 롤에서 선택 <span>→</span>
+      </div>
+      <a class="btn btn-primary" th:href="@{/upload}">음식 사진 업로드</a>
+    </div>
   </section>
 
   <section class="preview">
@@ -29,11 +27,11 @@
   </section>
 </main>
 
-<footer>
-  <p>&copy; 2024 Food Analyzer. All rights reserved.</p>
-  <p>
-    <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">Instagram</a>
-  </p>
-</footer>
+
+
+<input type="file" id="fileInput" class="hidden-input" accept="image/*" onchange="uploadFile(event)">
+
+<script src="script.js"></script>
+
 </body>
 </html>
