@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사진 분석중...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .progressbar {
+            width: 100%;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progressbar div {
+            height: 20px;
+            width: 0;
+            background-color: #76c7c0;
+            animation: loading 5s linear forwards;
+        }
+        @keyframes loading {
+            to {
+                width: 100%;
+            }
+        }
+        #status {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>사진 분석중...</h1>
+    <div class="progressbar">
+        <div></div>
+    </div>
+    <div id="status">잠시만 기다려주세요...</div>
+</div>
+
+<script>
+    setTimeout(function() {
+        window.location.href = '/result';
+    }, 5000); // 5초 후에 result 페이지로 이동
+</script>
+</body>
+</html>
