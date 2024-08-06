@@ -1,58 +1,90 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="ko">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <title>음식 사진 업로드</title>-->
-<!--  <link rel="stylesheet" href="styles.css">-->
-<!--</head>-->
-<!--<body>-->
-<!--  <header>-->
-<!--    <h1>음식 사진 업로드</h1>-->
-<!--  </header>-->
-<!--  <main>-->
-<!--    <section class="upload">-->
-<!--      <h2>사진을 업로드하세요</h2>-->
-<!--      <input type="file" id="file-input" accept="image/*" onchange="previewImage(event)">-->
-<!--      <div id="preview">-->
-<!--        <img id="uploaded-image" style="max-width: 100%; height: auto;">-->
-<!--      </div>-->
-
-<!--      <button onclick="analyzeImage()">분석 시작</button>-->
-<!--    </section>-->
-<!--  </main>-->
-<!--  <script src="upload.js"></script>-->
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>음식 사진 업로드</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uploaded Image</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="upload.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f8f9fa;
+      color: #343a40;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .header {
+      color: #495057;
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .image-container {
+      width: 100%;
+      height: 200px;
+      border: 2px dashed #ced4da;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: #868e96;
+      font-size: 18px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-
-
 <main>
-  <section class="upload">
-    <h2>사진을 업로드하세요</h2>
-
-    <form th:action="@{/analyze}" method="post" enctype="multipart/form-data">
-      <div id="preview">
-        <img id="uploaded-image" src="" alt="업로드된 사진 미리보기">
-      </div>
-
-      <div>
-        <input type="file" name="imageFile" onchange="previewImage(event)">
-      </div>
-
-      <div>
-        <button type="submit">분석 시작</button>
-      </div>
-    </form>
+  <section class="container">
+    <div class="header">업로드된 사진</div>
+    <div class="image-container" id="imageContainer">이미지 미리보기</div>
+    <a class="btn" href="progressbar.html">분석 시작</a>
   </section>
-  <div class="error-message" th:if="${error}" th:text="${error}"></div>
 </main>
+
+<script>
+  // Load the image from localStorage if available
+  window.onload = function() {
+    const savedImage = localStorage.getItem('uploadedImage');
+    if (savedImage) {
+      const imageContainer = document.getElementById('imageContainer');
+      imageContainer.style.backgroundImage = `url(${savedImage})`;
+      imageContainer.textContent = '';
+    }
+  }
+</script>
 </body>
 </html>
