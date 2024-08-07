@@ -1,57 +1,294 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+  font-family: 'Arial', sans-serif;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100vh;
-  background-color: #f4f4f4;
+  margin: 0;
+  background-color: #f8f9fa;
+  color: #343a40;
 }
 
 .container {
-  width: 375px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h1 {
+  color: #495057;
+  margin-bottom: 20px;
+}
+
+p {
+  margin: 10px 0;
+}
+
+#analyzed-food, #food-calories, #food-nutrients {
+  font-weight: bold;
+  color: #007bff;
+}
+
+#search-input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 20px 0;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+#search-results {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+#search-results li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ced4da;
+}
+
+#search-results li:last-child {
+  border-bottom: none;
+}
+
+#search-results li:hover {
+  background-color: #e9ecef;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.progressbar {
+  width: 100%;
+  background-color: #f0f0f0;
+  border-radius: 5px;
   overflow: hidden;
+  margin: 20px 0;
+}
+
+.progressbar div {
+  height: 20px;
+  width: 0;
+  background-color: #76c7c0;
+  animation: loading 5s linear forwards;
+}
+
+@keyframes loading {
+  to {
+    width: 100%;
+  }
+}
+
+#status {
+  margin-top: 20px;
 }
 
 .header {
-  padding: 20px;
-  text-align: center;
-  font-size: 18px;
+  color: #495057;
+  margin-bottom: 20px;
+  font-size: 24px;
   font-weight: bold;
 }
 
 .image-container {
   width: 100%;
   height: 200px;
-  background: url('path_to_image.png') no-repeat center center;
+  border: 2px dashed #ced4da;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: #868e96;
+  font-size: 18px;
   background-size: cover;
+  background-position: center;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+#file-input {
+  margin-bottom: 20px;
 }
 
 .options {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  align-items: center;
 }
 
 .option {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
   cursor: pointer;
-  border-bottom: 1px solid #f4f4f4;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
-.option:last-child {
+.option:hover {
+  background-color: #0056b3;
+}
+
+.hidden-input {
+  display: none;
+}
+/* result 페이지 스타일 */
+.result-main {
+  width: 80%;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.result-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.result-text-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.result-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #ced4da;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  color: #868e96;
+  font-size: 18px;
+}
+
+.result-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.result-header {
+  color: #495057;
+  margin-bottom: 20px;
+}
+
+.result-paragraph {
+  margin: 10px 0;
+}
+
+#analyzed-food, #food-calories, #food-nutrients {
+  font-weight: bold;
+  color: #007bff;
+}
+
+#search-input {
+  width: 100%;
+  padding: 10px;
+  margin: 20px 0;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+#search-results {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 100%;
+}
+
+#search-results li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ced4da;
+}
+
+#search-results li:last-child {
   border-bottom: none;
 }
 
-.option span {
-  color: #007bff;
+#search-results li:hover {
+  background-color: #e9ecef;
+}
+
+.progressbar {
+  width: 100%;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.progressbar div {
+  height: 20px;
+  width: 0;
+  background-color: #76c7c0;
+  animation: loading 5s linear forwards;
+}
+
+@keyframes loading {
+  to {
+    width: 100%;
+  }
+}
+
+#status {
+  margin-top: 20px;
 }
 
 .hidden-input {
