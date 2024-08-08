@@ -1,76 +1,141 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <title>Food Analyzer</title>-->
-<!--  <link rel="stylesheet" href="styles.css">-->
-<!--</head>-->
-<!--<body>-->
-<!--<header>-->
-<!--  <h1>Food Analyzer</h1>-->
-<!--  <nav>-->
-<!--    <ul>-->
-<!--      <li><a th:href="@{/}">홈</a></li>-->
-<!--      <li><a href="#">사용법</a></li>-->
-<!--      <li><a href="#">FAQ</a></li>-->
-<!--      <li><a href="#">연락처</a></li>-->
-<!--    </ul>-->
-<!--  </nav>-->
-<!--</header>-->
-
-<!--<main>-->
-<!--  <section class="welcome">-->
-<!--    <h2>음식 사진을 업로드하여 종류와 양을 분석하세요!</h2>-->
-<!--    <a class="btn btn-primary" th:href="@{/upload}">음식 사진 업로드</a>-->
-<!--  </section>-->
-
-<!--  <section class="preview">-->
-<!--    &lt;!&ndash; 미리보기 섹션 내용 &ndash;&gt;-->
-<!--  </section>-->
-<!--</main>-->
-
-<!--<footer>-->
-<!--  <p>&copy; 2024 Food Analyzer. All rights reserved.</p>-->
-<!--  <p>-->
-<!--    <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">Instagram</a>-->
-<!--  </p>-->
-<!--</footer>-->
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>음식 분석 웹사이트</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Analyzer</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f8f9fa;
+      color: #343a40;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 600px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .header {
+      color: #495057;
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .image-container {
+      width: 100%;
+      height: 200px;
+      border: 2px dashed #ced4da;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: #868e96;
+      font-size: 18px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .option {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .option:hover {
+      background-color: #0056b3;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .hidden-input {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1>Food Analyzer</h1>
-  <nav>
-    <ul>
-      <li><a href="#">홈</a></li>
-      <li><a href="#">사용법</a></li>
-      <li><a href="#">FAQ</a></li>
-      <li><a href="#">연락처</a></li>
-    </ul>
-  </nav>
-</header>
 <main>
-  <section class="welcome">
-    <h2>음식 사진을 업로드하여 종류와 양을 분석하세요!</h2>
-    <button onclick="location.href='/upload'">음식 사진 업로드</button>
+  <section class="container">
+    <div class="header">사진 업로드</div>
+    <div class="image-container" id="imageContainer">이미지 미리보기</div>
+    <div class="options">
+      <div class="option" onclick="document.getElementById('fileInput').click()">
+        카메라 롤에서 선택 <span>→</span>
+      </div>
+      <a class="btn btn-primary" href="upload">음식 사진 업로드</a>
+    </div>
   </section>
+
   <section class="preview">
-    <!-- 업로드된 사진 미리보기 -->
+    <!-- 미리보기 섹션 내용 -->
   </section>
 </main>
-<footer>
-  <p>&copy; 2024 Food Analyzer. All rights reserved.</p>
-  <p>
-    <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">Instagram</a>
-  </p>
-</footer>
+
+<input type="file" id="fileInput" class="hidden-input" accept="image/*" onchange="uploadFile(event)">
+
+<script>
+  function uploadFile(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const imageContainer = document.getElementById('imageContainer');
+      const imageDataUrl = e.target.result;
+      imageContainer.style.backgroundImage = `url(${imageDataUrl})`;
+      imageContainer.textContent = '';
+
+      // Store the image data URL in localStorage
+      localStorage.setItem('uploadedImage', imageDataUrl);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Load the image from localStorage if available
+  window.onload = function() {
+    const savedImage = localStorage.getItem('uploadedImage');
+    if (savedImage) {
+      const imageContainer = document.getElementById('imageContainer');
+      imageContainer.style.backgroundImage = `url(${savedImage})`;
+      imageContainer.textContent = '';
+    }
+  }
+</script>
 </body>
 </html>
+

@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', (event) => {
     // 로컬 스토리지에서 이미지 데이터 가져오기
     const resultImage = document.getElementById('result-image');
