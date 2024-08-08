@@ -1,80 +1,21 @@
-<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
-<!--&lt;!&ndash;<html lang="ko">&ndash;&gt;-->
-<!--&lt;!&ndash;<head>&ndash;&gt;-->
-<!--&lt;!&ndash;  <meta charset="UTF-8">&ndash;&gt;-->
-<!--&lt;!&ndash;  <title>음식 사진 업로드</title>&ndash;&gt;-->
-<!--&lt;!&ndash;  <link rel="stylesheet" href="styles.css">&ndash;&gt;-->
-<!--&lt;!&ndash;</head>&ndash;&gt;-->
-<!--&lt;!&ndash;<body>&ndash;&gt;-->
-<!--&lt;!&ndash;  <header>&ndash;&gt;-->
-<!--&lt;!&ndash;    <h1>음식 사진 업로드</h1>&ndash;&gt;-->
-<!--&lt;!&ndash;  </header>&ndash;&gt;-->
-<!--&lt;!&ndash;  <main>&ndash;&gt;-->
-<!--&lt;!&ndash;    <section class="upload">&ndash;&gt;-->
-<!--&lt;!&ndash;      <h2>사진을 업로드하세요</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;      <input type="file" id="file-input" accept="image/*" onchange="previewImage(event)">&ndash;&gt;-->
-<!--&lt;!&ndash;      <div id="preview">&ndash;&gt;-->
-<!--&lt;!&ndash;        <img id="uploaded-image" style="max-width: 100%; height: auto;">&ndash;&gt;-->
-<!--&lt;!&ndash;      </div>&ndash;&gt;-->
-
-<!--&lt;!&ndash;      <button onclick="analyzeImage()">분석 시작</button>&ndash;&gt;-->
-<!--&lt;!&ndash;    </section>&ndash;&gt;-->
-<!--&lt;!&ndash;  </main>&ndash;&gt;-->
-<!--&lt;!&ndash;  <script src="upload.js"></script>&ndash;&gt;-->
-<!--&lt;!&ndash;</body>&ndash;&gt;-->
-<!--&lt;!&ndash;</html>&ndash;&gt;-->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>음식 사진 업로드</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uploaded Image</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="upload.js"></script>
+  <script src="upload.js" defer></script>
+
 </head>
 <body>
-<header>
-  <h1>음식 사진 업로드</h1>
-</header>
-
 <main>
-  <h2>사진을 업로드하세요</h2>
-  <section class="upload">
-    <form onsubmit="analyzeImage(event)" enctype="multipart/form-data">
-      <input type="file" id="file-input" accept="image/*" onchange="previewImage(event)">
-      <div id="preview">
-        <img id="uploaded-image" style="max-width: 100%; height: auto;" alt="">
-      </div>
-      <button type="submit">분석 시작</button>
-    </form>
+  <section class="container">
+    <div class="header">업로드된 사진</div>
+    <div class="image-container" id="imageContainer">이미지 미리보기</div>
+    <button class="btn" onclick="startAnalysis()">분석 시작</button>
   </section>
-  <div class="error-message" th:if="${error}" th:text="${error}"></div>
 </main>
+
 </body>
 </html>
-
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org" lang="ko">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <title>음식 사진 업로드</title>-->
-<!--  <link rel="stylesheet" href="styles.css">-->
-<!--</head>-->
-<!--<body>-->
-<!--<header>-->
-<!--  <h1>음식 사진 업로드</h1>-->
-<!--</header>-->
-<!--<main>-->
-<!--  <section class="upload">-->
-<!--    <h2>사진을 업로드하세요</h2>-->
-<!--    <form th:action="@{/result/add}" method="post" enctype="multipart/form-data">-->
-<!--      <input type="file" id="file-input" accept="image/*" onchange="previewImage(event)">-->
-<!--      <div id="preview">-->
-<!--        <img id="uploaded-image" style="max-width: 100%; height: auto;">-->
-<!--      </div>-->
-<!--      <button onclick="analyzeImage()">분석 시작</button>-->
-<!--    </form>-->
-<!--  </section>-->
-<!--</main>-->
-<!--<script src="upload.js"></script>-->
-<!--</body>-->
-<!--</html>-->

@@ -1,4 +1,4 @@
-package pnu.project.smartplate.controller;
+package java.pnu.project.smartplate.controller;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -52,7 +52,8 @@ public class FoodAnalysisController {
         return "result";
     }
 
-    @PostMapping("/result")
+
+    @PostMapping("/progressbar")
     public String analyze(@RequestParam("imageFile") MultipartFile imageFile, Model model) {
         if (!imageFile.isEmpty()) {
             try {

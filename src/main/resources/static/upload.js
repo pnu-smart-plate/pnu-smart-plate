@@ -1,40 +1,47 @@
-function previewImage(event) {
-  const input = event.target;
-  const reader = new FileReader();
-  reader.onload = function () {
-    const preview = document.getElementById('uploaded-image');
-    preview.src = reader.result;
-
-    // 로컬 스토리지에 이미지 데이터 저장
-    localStorage.setItem('uploadedImage', reader.result);
-  };
-  reader.readAsDataURL(input.files[0]);
+window.onload = function() {
+  const savedImage = localStorage.getItem('uploadedImage');
+  if (savedImage) {
+    const imageContainer = document.getElementById('imageContainer');
+    imageContainer.style.backgroundImage = `url(${savedImage})`;
+    imageContainer.textContent = '';
+  }
 }
 
-function analyzeImage(event) {
-  event.preventDefault();
+function startAnalysis() {
+  const savedImage = localStorage.getItem('uploadedImage');
+  if (savedImage) {
+    // Convert base64 to blob
+    const byteString = atob(savedImage.split(',')[1]);
+    const mimeString = savedImage.split(',')[0].split(':')[1].split(';')[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([ab], {type: mimeString});
 
-  const fileInput = document.getElementById('file-input');
-  const file = fileInput.files[0];
-
-  if (file) {
+    // Create FormData and append the image
     const formData = new FormData();
-    formData.append('imageFile', file);
+    formData.append('imageFile', blob, 'image.jpg');
 
-    fetch('/result', {
+    // Send the image to the server
+    fetch('/progressbar', {
       method: 'POST',
       body: formData
     })
-    .then(response => response.text())
-    .then(data => {
-      console.log('서버 응답:', data);
-      window.location.href = '/result';
-    })
-    .catch(error => {
-      console.error('이미지 전송 실패:', error);
-      alert('이미지 분석에 실패했습니다. 다시 시도해주세요.');
-    });
+        .then(response => {
+          if (response.ok) {
+            // If successful, redirect to the progress page
+            window.location.href = '/progressbar';
+          } else {
+            throw new Error('서버 응답 에러');
+          }
+        })
+        .catch(error => {
+          console.error('이미지 전송 실패:', error);
+          alert('이미지 분석에 실패했습니다. 다시 시도해주세요.');
+        });
   } else {
-    alert('이미지를 업로드해주세요.');
+    alert('업로드된 이미지가 없습니다. 이미지를 먼저 선택해주세요.');
   }
 }
