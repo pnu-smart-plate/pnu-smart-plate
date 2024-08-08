@@ -37,12 +37,17 @@ public class FoodAnalysisController {
         return "upload";
     }
 
+    @GetMapping("/progressbar")
+    public String progress() {
+        return "progressbar";
+    }
+
     @GetMapping("/result")
     public String showResult(){
         return "result";
     }
 
-    @PostMapping("/result")
+    @PostMapping("/progressbar")
     public String analyze(@RequestParam("imageFile") MultipartFile imageFile, Model model) {
         if (!imageFile.isEmpty()) {
             try {
