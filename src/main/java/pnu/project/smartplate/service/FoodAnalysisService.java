@@ -9,51 +9,107 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 import pnu.project.smartplate.model.FoodInfo;
 
 @Service
+@Slf4j
 public class FoodAnalysisService {
 
-    // 업로드 디렉토리 설정
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    @Value("${fastapi.url}")
+    private String fastApiUrl;
+
+    @Value("${fastapi.port}")
+    private String fastApiPort;
+
+    @Value("${fastapi.endpoint}")
+    private String fastApiEndpoint;
+
+    private final RestTemplate restTemplate;
+
     private Map<String, FoodInfo> savedResults = new HashMap<>();
 
-    public void saveResult(String customType, String customAmount,String imageUrl) {
-        String dateKey = LocalDateTime.now().toString();
-        savedResults.put(dateKey, new FoodInfo(customType, customAmount,imageUrl));
+    Logger logger = LoggerFactory.getLogger(FoodAnalysisService.class);
+
+    @Value("${fastapi.scheme}")
+    private String fastApiScheme;
+
+    @Value("${fastapi.host}")
+    private String fastApiHost;
+
+
+    @Autowired
+    public FoodAnalysisService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
-
+    public void saveResult(String customType, String customAmount, String imageUrl) {
+        String dateKey = LocalDateTime.now().toString();
+        savedResults.put(dateKey, new FoodInfo(customType, customAmount, imageUrl));
+    }
 
     public FoodInfo analyzeImage(String imagePath) {
-        // 이미지 분석 로직 구현
-        // 예시로 하드코딩된 값 반환
-        String foodType = "볶음밥";
-        String foodAmount = "보통";
+        Path path = Paths.get(uploadDir + imagePath);
+        logger.atInfo().log(path.toString());
 
-        // 음식 정보 객체 생성 (음식종류, 음식의 양, 음식 이미지 파일 경로)
-        var foodInfo = new FoodInfo(foodType, foodAmount, imagePath);
-        return foodInfo;
+        FileSystemResource fileResource = new FileSystemResource(path.toFile());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("file", fileResource);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        String fullUrl = UriComponentsBuilder.newInstance()
+            .scheme(fastApiScheme)
+            .host(fastApiHost)
+            .port(fastApiPort)
+            .path(fastApiEndpoint)
+            .toUriString();
+
+        logger.atInfo().log(fullUrl);
+        ResponseEntity<FoodInfo> response = restTemplate.postForEntity(fullUrl, requestEntity, FoodInfo.class);
+        logger.atInfo().log(response.toString());
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            FoodInfo foodInfo = response.getBody();
+            if (foodInfo != null) {
+                foodInfo.setImageUrl(imagePath);
+            }
+            return foodInfo;
+        } else {
+            throw new RuntimeException("Failed to analyze image. Status code: " + response.getStatusCode());
+        }
     }
 
     public String saveImg(MultipartFile imageFile) throws IOException {
-        // 고유한 파일명 생성
         String originalFileName = imageFile.getOriginalFilename();
-        String extension = null;
-        if (originalFileName != null) {
-            extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-        }
+        String extension = originalFileName != null ? originalFileName.substring(originalFileName.lastIndexOf(".")) : "";
         String fileName = UUID.randomUUID() + extension;
 
-        // 파일 저장 경로 설정
         String filePath = uploadDir + fileName;
 
-        // 파일 저장
         Path path = Paths.get(filePath);
         Files.createDirectories(path.getParent());
         Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
