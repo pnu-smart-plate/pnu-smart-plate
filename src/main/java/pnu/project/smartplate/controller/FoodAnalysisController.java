@@ -43,7 +43,7 @@ public class FoodAnalysisController {
     }
 
     @GetMapping("/result")
-    public String showResult(){
+    public String showResult() {
         return "result";
     }
 
@@ -54,7 +54,7 @@ public class FoodAnalysisController {
                 // 이미지 저장
                 String fileName = foodAnalysisService.saveImg(imageFile);
                 // 분석 수행
-                FoodInfo foodInfo = foodAnalysisService.analyzeImage("/uploads/" + fileName);
+                FoodInfo foodInfo = foodAnalysisService.analyzeImage(fileName);
 
                 model.addAttribute("foodInfo", foodInfo);
                 return "result";
