@@ -1,12 +1,6 @@
 package pnu.project.smartplate.controller;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +37,7 @@ public class FoodAnalysisController {
     }
 
     @GetMapping("/result")
-    public String showResult(){
+    public String showResult() {
         return "result";
     }
 
@@ -54,7 +48,7 @@ public class FoodAnalysisController {
                 // 이미지 저장
                 String fileName = foodAnalysisService.saveImg(imageFile);
                 // 분석 수행
-                FoodInfo foodInfo = foodAnalysisService.analyzeImage("/uploads/" + fileName);
+                FoodInfo foodInfo = foodAnalysisService.analyzeImage(fileName);
 
                 model.addAttribute("foodInfo", foodInfo);
                 return "result";
