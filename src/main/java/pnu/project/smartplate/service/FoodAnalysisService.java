@@ -68,19 +68,10 @@ public class FoodAnalysisService {
     }
 
     public FoodInfo analyzeImage(String imagePath) {
-        Path path = Paths.get(uploadDir + imagePath);
-        logger.atInfo().log(path.toString());
 
-        FileSystemResource fileResource = new FileSystemResource(path.toFile());
-
+        // 헤더
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", fileResource);
-
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-
         String fullUrl = UriComponentsBuilder.newInstance()
             .scheme(fastApiScheme)
             .host(fastApiHost)
@@ -88,10 +79,21 @@ public class FoodAnalysisService {
             .path(fastApiEndpoint)
             .toUriString();
 
-        logger.atInfo().log(fullUrl);
-        ResponseEntity<FoodInfo> response = restTemplate.postForEntity(fullUrl, requestEntity, FoodInfo.class);
-        logger.atInfo().log(response.toString());
+        // 바디
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
+        Path path = Paths.get(uploadDir + imagePath);
+//        Path path = Paths.get("src/main/resources/static/" + imagePath);
+        FileSystemResource fileResource = new FileSystemResource(path.toFile());
+
+        body.add("file", fileResource);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // 요청
+        System.out.println("requestEntity = " + requestEntity);
+        ResponseEntity<FoodInfo> response = restTemplate.postForEntity(fullUrl, requestEntity, FoodInfo.class);
+
+        // 리턴
         if (response.getStatusCode() == HttpStatus.OK) {
             FoodInfo foodInfo = response.getBody();
             if (foodInfo != null) {
@@ -101,6 +103,9 @@ public class FoodAnalysisService {
         } else {
             throw new RuntimeException("Failed to analyze image. Status code: " + response.getStatusCode());
         }
+
+
+
     }
 
     public String saveImg(MultipartFile imageFile) throws IOException {
