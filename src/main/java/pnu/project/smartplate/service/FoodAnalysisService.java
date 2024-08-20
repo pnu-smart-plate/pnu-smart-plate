@@ -10,7 +10,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -117,9 +116,9 @@ public class FoodAnalysisService {
             foods.put("시래기된장국", 200);
 
             // CSV에서 해당 음식의 정보 가져오기
-            List<FoodNutrient> food = findFood(foods);
-            for (FoodNutrient foodNutrient : food) {
-                log.info(foodNutrient.toString());
+            Map<String, FoodNutrient> foodMap = findFood(foods);
+            for (String foodName: foodMap.keySet()) {
+                log.info(foodMap.get(foodName).toString());
             }
             return foodInfo;
         } else {
@@ -147,12 +146,13 @@ public class FoodAnalysisService {
     }
 
     // TODO: 12가지 음식 영양 정보 CSV 파일 읽어서 LIST형식으로 리턴 -(gimsanghae, 2024-08-16, 18:28)
-    private List<FoodNutrient> readCSV() throws IOException {
+    private Map<String, FoodNutrient> readCSV() throws IOException {
         File file = new File("FoodNutrient.csv");
         BufferedReader bufferedReader = new BufferedReader(
             new InputStreamReader(new FileInputStream(file), "UTF-8"));
         String line;
-        List<FoodNutrient> nutrientList = new ArrayList<>();
+        Map<String, FoodNutrient> foods = new LinkedHashMap<>();
+        // List<FoodNutrient> nutrientList = new ArrayList<>();
         while ((line = bufferedReader.readLine()) != null) {
             // 쉼표 뒤 문자열이거나 큰따옴표로 둘러쌓인 문자열이 나오거나 둘 중 하나이며 큰따옴표 사이의 쉼표 및 특수기호는 무시
             // 제한 없이 split을 한다 -> 구분자가 나올면 무제한 분할한다.
@@ -170,20 +170,25 @@ public class FoodAnalysisService {
             // 음식 영양 정보 객체 생성
             FoodNutrient nutrient = new FoodNutrient(name, amount, calory, carbo, protein, fat,
                 sugar);
-            nutrientList.add(nutrient);
+            foods.put(name, nutrient);
         }
-        return nutrientList;
+        return foods;
     }
 
     // TODO(gimsanghae, 2024-08-15, 목, 22:09): 전달받은 음식명과 중량 데이터로 영양 정보 CSV에서 해당 음식 영양 정보 찾기
-    private List<FoodNutrient> findFood(Map<String, Integer> foodInfos) throws IOException {
-        return readCSV().stream() // 모든 CSV 파일 가져오기
-            .filter(foodNutrient -> foodInfos.containsKey(
-                foodNutrient.getName())) // 인식된 이름의 foodNutrient만 filtering
-            .peek(foodNutrient -> calculateNutrient(foodNutrient, foodInfos.get(
-                foodNutrient.getName()))) // filter된 foodNutrient를 다시 인식된 양에 맞게 음식 영양 정보를 계산
-            .collect(Collectors.toList()); // list로 리턴
-    }
+    private Map<String, FoodNutrient> findFood(Map<String, Integer> foodInfos) throws IOException {
+    Map<String, FoodNutrient> foodNutrientMap = readCSV();
+    return foodInfos.entrySet().stream()
+        .filter(entry -> foodNutrientMap.containsKey(entry.getKey()))
+        .collect(Collectors.toMap(
+            Map.Entry::getKey,
+            entry -> {
+                FoodNutrient nutrient = foodNutrientMap.get(entry.getKey());
+                calculateNutrient(nutrient, entry.getValue());
+                return nutrient;
+            }
+        ));
+}
 
     // TODO(gimsanghae, 2024-08-15, 목, 22:13): 인식된 음식의 중량을 바탕으로 영양 정보 계산하기
     private void calculateNutrient(FoodNutrient foodNutrient, Integer amount) {
