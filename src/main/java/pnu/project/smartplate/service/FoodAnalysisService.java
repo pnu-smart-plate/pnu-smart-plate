@@ -151,8 +151,8 @@ public class FoodAnalysisService {
         BufferedReader bufferedReader = new BufferedReader(
             new InputStreamReader(new FileInputStream(file), "UTF-8"));
         String line;
+        // foods, <음식명, 음식 영양 정보>
         Map<String, FoodNutrient> foods = new LinkedHashMap<>();
-        // List<FoodNutrient> nutrientList = new ArrayList<>();
         while ((line = bufferedReader.readLine()) != null) {
             // 쉼표 뒤 문자열이거나 큰따옴표로 둘러쌓인 문자열이 나오거나 둘 중 하나이며 큰따옴표 사이의 쉼표 및 특수기호는 무시
             // 제한 없이 split을 한다 -> 구분자가 나올면 무제한 분할한다.
