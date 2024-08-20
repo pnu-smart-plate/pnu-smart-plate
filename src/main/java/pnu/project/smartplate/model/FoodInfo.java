@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,7 +19,7 @@ public class FoodInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="식품명")
+    @Column(name = "식품명")
     private String foodName;
 
     @Column(name = "식품량")
@@ -30,55 +29,55 @@ public class FoodInfo {
     private String imageUrl;
 
     @Column(name = "중량_g")
-    private BigDecimal weightG;
+    private int weightG;
 
     @Column(name = "에너지_kcal")
-    private BigDecimal energyKcal;
+    private int energyKcal;
 
     @Column(name = "탄수화물_g")
-    private BigDecimal carbohydrateG;
+    private int carbohydrateG;
 
     @Column(name = "당류_g")
-    private BigDecimal sugarG;
+    private int sugarG;
 
     @Column(name = "지방_g")
-    private BigDecimal fatG;
+    private int fatG;
 
     @Column(name = "단백질_g")
-    private BigDecimal proteinG;
+    private int proteinG;
 
     @Column(name = "칼슘_mg")
-    private BigDecimal calciumMg;
+    private int calciumMg;
 
     @Column(name = "인_mg")
-    private BigDecimal phosphorusMg;
+    private int phosphorusMg;
 
     @Column(name = "나트륨_mg")
-    private BigDecimal sodiumMg;
+    private int sodiumMg;
 
     @Column(name = "칼륨_mg")
-    private BigDecimal potassiumMg;
+    private int potassiumMg;
 
     @Column(name = "마그네슘_mg")
-    private BigDecimal magnesiumMg;
+    private int magnesiumMg;
 
     @Column(name = "철_mg")
-    private BigDecimal ironMg;
+    private int ironMg;
 
     @Column(name = "아연_mg")
-    private BigDecimal zincMg;
+    private int zincMg;
 
     @Column(name = "콜레스테롤_mg")
-    private BigDecimal cholesterolMg;
+    private int cholesterolMg;
 
     @Column(name = "트랜스지방_g")
-    private BigDecimal transFatG;
+    private int transFatG;
 
     public FoodInfo() {
 
     }
 
-    public FoodInfo(String foodName, String foodAmount, String imageUrl) {
+    public FoodInfo(String foodName,String foodAmount, String imageUrl) {
         this.foodName = foodName;
         this.foodAmount = foodAmount;
         this.imageUrl = imageUrl;
