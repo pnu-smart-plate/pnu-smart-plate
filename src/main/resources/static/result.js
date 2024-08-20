@@ -94,14 +94,17 @@ function updateSummary() {
   document.getElementById('total-nutrients').textContent = `단백질 ${totalProtein.toFixed(2)}g, 지방 ${totalFat.toFixed(2)}g, 탄수화물 ${totalCarbs.toFixed(2)}g`;
 }
 
-function confirmSelection() {
-  alert(`선택된 음식: ${selectedFoods.map(food => food.name).join(', ')}`);
-}
-function previewImage(event) {
+function previewImage() {
+  const file = document.getElementById('image-upload').files[0];
   const reader = new FileReader();
-  reader.onload = function() {
-      const output = document.getElementById('result-image');
-      output.src = reader.result;
-  };
-  reader.readAsDataURL(event.target.files[0]);
+
+  reader.onloadend = function () {
+      document.getElementById('result-image').src = reader.result;
+  }
+
+  if (file) {
+      reader.readAsDataURL(file);
+  } else {
+      document.getElementById('result-image').src = "";
+  }
 }
