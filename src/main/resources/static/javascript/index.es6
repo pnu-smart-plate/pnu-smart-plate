@@ -9,6 +9,7 @@ function uploadFile(event) {
 
     // Store the image data URL in localStorage
     localStorage.setItem('uploadedImage', imageDataUrl);
+    console.log(imageDataUrl)
   };
   reader.readAsDataURL(file);
 }
