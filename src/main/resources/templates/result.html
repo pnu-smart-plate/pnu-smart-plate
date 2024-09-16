@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,15 +15,36 @@
       <p class="result-paragraph">분석된 음식:</p>
       <div id="selected-foods"></div>
       <p class="result-paragraph">총 칼로리: <span id="total-calories">0 kcal</span></p>
-      <p class="result-paragraph">총 영양 성분: <span id="total-nutrients">단백질 0g, 지방 0g, 탄수화물 0g</span></p>
+      <p class="result-paragraph">총 영양 성분: <span id="total-nutrients">단백질 0g, 지방 0g, 탄수화물 0g</span>
+      </p>
       <p class="result-paragraph">음식을 검색하여 추가하세요:</p>
       <input type="text" id="search-input" placeholder="음식 이름 검색" oninput="searchFood()">
       <ul id="search-results"></ul>
     </div>
     <div class="result-image-container">
-      <img id="result-image" class="result-image" src="" alt="업로드된 이미지" />
+      <img id="result-image" class="result-image" src="" alt="업로드된 이미지"/>
     </div>
-  </div>
+    <div>
+    <table>
+    <tr>
+        <th>음식 이름</th>
+        <th>양 (g)</th>
+        <th>칼로리 (kcal)</th>
+        <th>탄수화물 (g)</th>
+        <th>단백질 (g)</th>
+        <th>지방 (g)</th>
+        <th>당류 (g)</th>
+    </tr>
+    <tr th:each="entry : ${foodNutrientMap}">
+        <td th:text="${entry.key}"></td>
+        <td th:text="${entry.value.amount}"></td>
+        <td th:text="${entry.value.calory}"></td>
+        <td th:text="${entry.value.carbo}"></td>
+        <td th:text="${entry.value.protein}"></td>
+        <td th:text="${entry.value.fat}"></td>
+        <td th:text="${entry.value.sugar}"></td>
+    </tr>
+</table>
 </main>
 </body>
 </html>
