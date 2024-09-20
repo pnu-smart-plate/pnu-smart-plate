@@ -77,6 +77,14 @@ public class FoodInfo {
 
     }
 
+    public FoodInfo(String foodName) {
+        this(foodName, null, null);
+    }
+
+    public FoodInfo(String foodName, String foodAmount) {
+        this(foodName, foodAmount, null);
+    }
+
     public FoodInfo(String foodName,String foodAmount, String imageUrl) {
         this.foodName = foodName;
         this.foodAmount = foodAmount;
