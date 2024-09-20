@@ -1,5 +1,7 @@
 package pnu.project.smartplate.controller;
 
+import jakarta.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,6 @@ public class FoodAnalysisController {
 
     private final FoodAnalysisService foodAnalysisService;
 
-    private Map<String, FoodNutrient> foodMap;
-    private String fileName;
 
     @Autowired
     public FoodAnalysisController(FoodAnalysisService foodAnalysisService) {
@@ -41,11 +41,22 @@ public class FoodAnalysisController {
         return "progressbar";
     }
 
+    @Autowired
+    private HttpSession session;
+
     @GetMapping("/result")
     public String showResult(Model model) {
-        log.info(fileName);
-        model.addAttribute("foodNutrientMap", foodMap);
-        model.addAttribute("imageName", fileName);
+        Map<String, FoodNutrient> foodMap =
+            (Map<String, FoodNutrient>) session.getAttribute("foodMap");
+        String fileName = (String) session.getAttribute("fileName");
+        if (foodMap != null && fileName != null) {
+            log.info(fileName);
+            model.addAttribute("foodNutrientMap", foodMap);
+            model.addAttribute("imageName", fileName);
+        } else {
+            model.addAttribute("error", "분석된 데이터가 없습니다.");
+        }
+
         return "result";
     }
 
@@ -53,12 +64,20 @@ public class FoodAnalysisController {
     public String analyze(@RequestParam("imageFile") MultipartFile imageFile, Model model) {
         if (!imageFile.isEmpty()) {
             try {
+                session.removeAttribute("foodMap");
+                session.removeAttribute("fileName");
                 // 이미지 저장
-                fileName = foodAnalysisService.saveImg(imageFile);
+                String fileName = foodAnalysisService.saveImg(imageFile);
                 // 분석 수행
+                Map<String, FoodNutrient> foodMap = new HashMap<>();
                 foodMap = foodAnalysisService.analyzeImage(fileName);
                 log.info(foodMap.toString());
-                return "result";
+
+                // 세션에 데이터 저장
+                session.setAttribute("foodMap", foodMap);
+                session.setAttribute("fileName", fileName);
+
+                return "redirect:/result";
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 // 오류 처리
