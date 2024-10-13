@@ -1,47 +1,6 @@
-/*body {*/
-/*  font-family: Arial, sans-serif;*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*  height: 100vh;*/
-/*  margin: 0;*/
-/*  background-color: #f0f0f0;*/
-/*}*/
-
-/*.container {*/
-/*  width: 80%;*/
-/*  max-width: 600px;*/
-/*  text-align: center;*/
-/*}*/
-
-/*.progressbar {*/
-/*  width: 100%;*/
-/*  background-color: #f0f0f0;*/
-/*  border-radius: 5px;*/
-/*  overflow: hidden;*/
-/*  margin: 20px 0;*/
-/*}*/
-
-/*.progressbar div {*/
-/*  height: 20px;*/
-/*  width: 0;*/
-/*  background-color: #76c7c0;*/
-/*  animation: loading 5s linear forwards;*/
-/*}*/
-
-/*@keyframes loading {*/
-/*  to {*/
-/*    width: 100%;*/
-/*  }*/
-/*}*/
-
-/*#status {*/
-/*  margin-top: 20px;*/
-/*}*/
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Jua", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,7 +29,7 @@ body {
 .progressbar div {
   height: 20px;
   width: 0;
-  background-color: #76c7c0;
+  background-color: #0A6E0A;
   animation: loading 5s linear forwards;
 }
 

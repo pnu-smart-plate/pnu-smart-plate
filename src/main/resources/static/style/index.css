@@ -6,7 +6,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
   background-color: #f8f9fa;
   color: #343a40;
@@ -14,158 +14,102 @@ body {
 
 .container {
   width: 100%;
-  max-width: 100%;
-  min-width: 400px;
+   max-width: 1280px;
+    min-width: 600px;
   align-content: center;
-  max-width: 1900px;
   background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
-  align-self: center;
+  margin: 0 auto; /* 가운데 정렬을 위해 추가 */
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  /* 기존 스타일 유지 */
+  justify-content: center;
 }
 
 .header {
-  color: #495057;
-  align-content: center;
-  margin-bottom: 20px;
-  font-size: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #0A6E0A;
+  margin-bottom: 1.5rem;
+  font-size: 4rem;
   font-weight: bold;
-  align-self: center;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  right: -20px;
 }
 
 .image-container {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 16/9;
   border: 2px dashed #ced4da;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
   color: #868e96;
-  font-size: 18px;
-  background-size: cover;
+  font-size: 1.125rem;
+  background-size: contain;
   background-position: center;
-  align-content: center;
-  align-items: center;
-  align-self: center;
+  background-repeat: no-repeat;
 }
 
 .options {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  gap: 30px;
+  margin-top: 20px;
 }
 
-.option {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.option:hover {
-  background-color: #0056b3;
-}
-
-.btn {
-  padding: 10px 20px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  background-color: #0A6E0A;
+  color: white;
   text-decoration: none;
+  font-size: 36px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: none;
+  border-radius: 8px;
 }
 
-.btn:hover {
-  background-color: #0056b3;
+.button:hover {
+  background-color: #065004;
 }
 
 .hidden-input {
   display: none;
 }
 
-/* 큰 화면에서 스타일 */
-@media (max-width: 2000px) {
-  .container {
-    align-content: center;
-    width: 500px;
-    padding: 15px;
-  }
-
-  .header {
-    text-align: center;
-    font-size: xxx-large;
-  }
-
-  .image-container {
-    height: 300px;
-    align-content: center;
-  }
-
-  .option, .btn {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-}
-
-/* 모바일 반응형 - 30% 크기 증가 */
+/* 반응형 스타일 */
 @media (max-width: 768px) {
   .container {
-    width: 500px;
-    align-content: center;
-    justify-self: center;
-    padding: 32px; /* 30% 크기 증가 */
+    width: 90%;
+    padding: 1.5rem;
   }
 
   .header {
-    font-size: 30px; /* 크기 증가 */
-    text-align: center; /* 중앙 정렬 유지 */
-    align-content: center;
-  }
-
-  .image-container {
-    align-content: center;
-    height: 200px; /* 이미지 컨테이너 높이 증가 */
-    width: 100%;
-    font-size: 18px;
-  }
-
-  .option, .btn {
-    width: 100%;
-    font-size: 18px; /* 버튼 폰트 크기 증가 */
-    padding: 14px 22px;
+    font-size: 1.75rem;
   }
 }
 
 @media (max-width: 480px) {
   .container {
     width: 95%;
-    padding: 28px; /* 30% 크기 증가 */
+    padding: 1.25rem;
   }
 
   .header {
-    font-size: 28px; /* 모바일에서 헤더 크기 증가 */
-    text-align: center; /* 중앙 정렬 유지 */
-  }
-
-  .image-container {
-    height: 300px; /* 이미지 컨테이너 높이 증가 */
-    font-size: 18px;
-  }
-
-  .option, .btn {
-    font-size: 18px; /* 버튼 크기를 좀 더 키움 */
-    padding: 14px 20px;
+    font-size: 1.5rem;
   }
 }

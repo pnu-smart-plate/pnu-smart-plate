@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Uploaded Image</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link th:href="@{./style/upload.css}" rel="stylesheet"/>
   <script th:src="@{./javascript/upload.es6}"></script>
 </head>
@@ -12,7 +16,9 @@
   <section class="container">
     <div class="header">업로드된 사진</div>
     <div class="image-container" id="imageContainer">이미지 미리보기</div>
-    <button class="btn" onclick="startAnalysis()">분석 시작</button>
+    <button class="button" onclick="startAnalysis()">
+      <i class="fas fa-arrow-right"></i>
+    </button>
   </section>
 </main>
 </body>
