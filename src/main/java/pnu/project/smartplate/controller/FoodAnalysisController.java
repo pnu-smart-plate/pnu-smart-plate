@@ -1,7 +1,6 @@
 package pnu.project.smartplate.controller;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +46,23 @@ public class FoodAnalysisController {
         log.info(fileName);
         model.addAttribute("foodNutrientMap", foodMap);
         model.addAttribute("imageName", fileName);
+
+        // 합계 계산
+        if (foodMap != null && !foodMap.isEmpty()) {
+            double totalCalory = foodMap.values().stream().mapToDouble(FoodNutrient::getCalory).sum();
+            double totalCarbo = foodMap.values().stream().mapToDouble(FoodNutrient::getCarbo).sum();
+            double totalProtein = foodMap.values().stream().mapToDouble(FoodNutrient::getProtein).sum();
+            double totalFat = foodMap.values().stream().mapToDouble(FoodNutrient::getFat).sum();
+            double totalSugar = foodMap.values().stream().mapToDouble(FoodNutrient::getSugar).sum();
+
+            // 모델에 합계 값 추가
+            model.addAttribute("totalCalory", totalCalory);
+            model.addAttribute("totalCarbo", totalCarbo);
+            model.addAttribute("totalProtein", totalProtein);
+            model.addAttribute("totalFat", totalFat);
+            model.addAttribute("totalSugar", totalSugar);
+        }
+
         return "result";
     }
 

@@ -1,58 +1,13 @@
-const foodData = [
-    { name: '김치', calories: 50, protein: 2, fat: 0.5, carbs: 10, baseWeight: 100 },
-    { name: '비빔밥', calories: 500, protein: 12, fat: 10, carbs: 80, baseWeight: 250 },
-    { name: '된장찌개', calories: 150, protein: 8, fat: 5, carbs: 20, baseWeight: 200 },
-    { name: '불고기', calories: 300, protein: 20, fat: 15, carbs: 25, baseWeight: 150 },
-    { name: '갈비탕', calories: 400, protein: 30, fat: 20, carbs: 35, baseWeight: 300 },
-    { name: '삼겹살', calories: 600, protein: 15, fat: 55, carbs: 0, baseWeight: 100 },
-    { name: '잡채', calories: 350, protein: 6, fat: 10, carbs: 65, baseWeight: 200 },
-    { name: '김밥', calories: 200, protein: 4, fat: 2, carbs: 40, baseWeight: 150 },
-    { name: '냉면', calories: 250, protein: 5, fat: 2, carbs: 50, baseWeight: 300 },
-    { name: '떡볶이', calories: 400, protein: 6, fat: 10, carbs: 75, baseWeight: 250 }
-];
+
 
 let selectedFoods = [];
 
 document.addEventListener('DOMContentLoaded', function() {
     loadImage();
     setupSearchListener();
-
-    // 테스트용 음식 리스트 입력
-    const inputFoodList = [
-        { name: '불고기', weight: 200 },
-        { name: '김밥', weight: 150 },
-        { name: '떡볶이', weight: 300 }
-    ];
     addFoodsFromList(inputFoodList);
 });
 
-// function loadImage() {
-//     const img = document.getElementById('result-image');
-//     const imageName = img.dataset.imageName;
-//     let attempts = 0;
-//     const maxAttempts = 5;
-//
-//     function tryLoadImage() {
-//         if (imageName) {
-//             img.src = `/uploads/${imageName}?t=${new Date().getTime()}`;
-//             img.onerror = function() {
-//                 if (attempts < maxAttempts) {
-//                     attempts++;
-//                     setTimeout(tryLoadImage, 1000);
-//                 } else {
-//                     console.error('이미지 로딩 실패:', imageName);
-//                 }
-//             };
-//             img.onload = function() {
-//                 console.log('이미지 로딩 성공:', imageName);
-//             };
-//         } else {
-//             console.error('이미지 이름이 제공되지 않았습니다.');
-//         }
-//     }
-//
-//     tryLoadImage();
-// }
 
 function setupSearchListener() {
     const searchInput = document.getElementById('search-input');

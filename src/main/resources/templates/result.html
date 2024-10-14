@@ -1,132 +1,12 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="ko">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>분석 결과</title>-->
-<!--    <link rel="stylesheet" href="./style/result.css">-->
-<!--    <script src="./javascript/result.es6"></script>-->
-<!--</head>-->
-<!--<body>-->
-<!--<main class="result-main">-->
-<!--    <div class="result-container">-->
-<!--        <div class="result-text-container">-->
-<!--            <h1 class="result-header">분석 결과</h1>-->
-<!--            <div class="result-image-container">-->
-<!--                <img id="result-image" class="result-image" src="" alt="업로드된 이미지"/>-->
-<!--            </div>-->
-<!--            <div class="result-chart-container">-->
-<!--                <h2 class="result-header">총 섭취량</h2>-->
-<!--                <div class="bar-chart" id="total-calories-bar" data-calories="${#numbers.sum(foodNutrientMap.values().![calory])}"></div>-->
-<!--                <h2 class="result-header">영양소 비율</h2>-->
-<!--                <div class="nutrient-chart-container">-->
-<!--                    <div class="nutrient-chart" id="carbo-chart" style="&#45;&#45;value: ${#numbers.sum(foodNutrientMap.values().![carbo]) / 269 * 100}; &#45;&#45;color: #A0522D;">-->
-<!--                        <div></div>-->
-<!--                        <p>탄수화물 ${#numbers.sum(foodNutrientMap.values().![carbo])}g (${#numbers.formatDecimal((#numbers.sum(foodNutrientMap.values().![carbo]) / 269 * 100), 1)}%)</p>-->
-<!--                    </div>-->
-<!--                    <div class="nutrient-chart" id="protein-chart" style="&#45;&#45;value: ${#numbers.sum(foodNutrientMap.values().![protein]) / 83 * 100}; &#45;&#45;color: #B22222;">-->
-<!--                        <div></div>-->
-<!--                        <p>단백질 ${#numbers.sum(foodNutrientMap.values().![protein])}g (${#numbers.formatDecimal((#numbers.sum(foodNutrientMap.values().![protein]) / 83 * 100), 1)}%)</p>-->
-<!--                    </div>-->
-<!--                    <div class="nutrient-chart" id="fat-chart" style="&#45;&#45;value: ${#numbers.sum(foodNutrientMap.values().![fat]) / 50 * 100}; &#45;&#45;color: #FF8C00;">-->
-<!--                        <div></div>-->
-<!--                        <p>지방 ${#numbers.sum(foodNutrientMap.values().![fat])}g (${#numbers.formatDecimal((#numbers.sum(foodNutrientMap.values().![fat]) / 50 * 100), 1)}%)</p>-->
-<!--                    </div>-->
-<!--                    <div class="nutrient-chart" id="sugar-chart" style="&#45;&#45;value: ${#numbers.sum(foodNutrientMap.values().![sugar]) / 25 * 100}; &#45;&#45;color: #FFD700;">-->
-<!--                        <div></div>-->
-<!--                        <p>당류 ${#numbers.sum(foodNutrientMap.values().![sugar])}g (${#numbers.formatDecimal((#numbers.sum(foodNutrientMap.values().![sugar]) / 25 * 100), 1)}%)</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <table>-->
-<!--                    <tr>-->
-<!--                        <th>음식 이름</th>-->
-<!--                        <th>양 (g)</th>-->
-<!--                        <th>칼로리 (kcal)</th>-->
-<!--                        <th>탄수화물 (g)</th>-->
-<!--                        <th>단백질 (g)</th>-->
-<!--                        <th>지방 (g)</th>-->
-<!--                        <th>당류 (g)</th>-->
-<!--                    </tr>-->
-<!--                    <tr th:each="entry : ${foodNutrientMap}">-->
-<!--                        <td th:text="${entry.key}"></td>-->
-<!--                        <td th:text="${entry.value.amount}"></td>-->
-<!--                        <td th:text="${entry.value.calory}"></td>-->
-<!--                        <td th:text="${entry.value.carbo}"></td>-->
-<!--                        <td th:text="${entry.value.protein}"></td>-->
-<!--                        <td th:text="${entry.value.fat}"></td>-->
-<!--                        <td th:text="${entry.value.sugar}"></td>-->
-<!--                    </tr>-->
-<!--                    <tr class="sum-row" th:if="${foodNutrientMap != null and !foodNutrientMap.isEmpty()}">-->
-<!--                        <td>합계</td>-->
-<!--                        <td>-</td>-->
-<!--                        <td th:text="${#numbers.sum(foodNutrientMap.values().![calory])}"></td>-->
-<!--                        <td th:text="${#numbers.sum(foodNutrientMap.values().![carbo])}"></td>-->
-<!--                        <td th:text="${#numbers.sum(foodNutrientMap.values().![protein])}"></td>-->
-<!--                        <td th:text="${#numbers.sum(foodNutrientMap.values().![fat])}"></td>-->
-<!--                        <td th:text="${#numbers.sum(foodNutrientMap.values().![sugar])}"></td>-->
-<!--                    </tr>-->
-<!--                </table>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</main>-->
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>분석 결과</title>
-    <link rel="stylesheet" href="./style/result.css">
+    <link rel="stylesheet" th:href="@{./style/result.css}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="./javascript/result.es6"></script>
-    <style>
-        .bar-chart-container {
-            width: 100%;
-            max-width: 500px;
-            margin: 20px auto;
-            position: relative;
-            height: 30px;
-            background-color: #D3D3D3;
-            border-radius: 15px;
-        }
-        .bar-chart {
-            height: 100%;
-            background-color: #0A6E0A;
-            border-radius: 15px 0 0 15px;
-        }
-        .calorie-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1em;
-            font-weight: bold;
-            color: #333;
-        }
-        .chart-container {
-            width: 100px;
-            height: 100px;
-            margin: 20px;
-            display: inline-block;
-            position: relative;
-        }
-        .chart-group {
-            text-align: center;
-        }
-        .chart-percentage {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1em;
-            font-weight: bold;
-            color: #333;
-        }
-    </style>
+    <script th:src="@{./javascript/result.es6}"></script>
 </head>
 <body>
 <main class="result-main">
@@ -139,103 +19,87 @@
             <div class="result-chart-container">
                 <h2 class="result-header">총 섭취량</h2>
                 <div class="bar-chart-container">
-                    <div class="bar-chart" id="total-calories-bar"></div>
-                    <div class="calorie-text" id="calorie-text"></div>
+                    <div class="bar-chart" th:style="${totalCalory != null ? ('width: ' + (totalCalory / 2000.0 * 100) + '%') : 'width: 0%'}"></div>
+                    <div class="calorie-text">
+                        <span th:text="${totalCalory != null ? totalCalory : 0}"></span> / 2000 kcal (<span th:text="${totalCalory != null ? T(java.lang.String).format('%.1f', (totalCalory / 2000.0 * 100)) : '0.0'}"></span>%)
+                    </div>
                 </div>
+
                 <h2 class="result-header">영양소 비율 (하루 권장량 대비 섭취량)</h2>
                 <div class="chart-group">
                     <div class="chart-container">
                         <canvas id="carbo-donut-chart"></canvas>
-                        <div class="chart-percentage" id="carbo-percentage"></div>
+                        <div class="chart-percentage" id="carbo-percentage">탄수화물</div>
                     </div>
                     <div class="chart-container">
                         <canvas id="protein-donut-chart"></canvas>
-                        <div class="chart-percentage" id="protein-percentage"></div>
+                        <div class="chart-percentage" id="protein-percentage">단백질</div>
                     </div>
                     <div class="chart-container">
                         <canvas id="fat-donut-chart"></canvas>
-                        <div class="chart-percentage" id="fat-percentage"></div>
+                        <div class="chart-percentage" id="fat-percentage">지방</div>
                     </div>
                     <div class="chart-container">
                         <canvas id="sugar-donut-chart"></canvas>
-                        <div class="chart-percentage" id="sugar-percentage"></div>
+                        <div class="chart-percentage" id="sugar-percentage">당류</div>
                     </div>
                 </div>
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
-                        const foodNutrientMap = JSON.parse(localStorage.getItem('foodNutrientMap'));
-                        const totalCalories = Object.values(foodNutrientMap).reduce((acc, item) => acc + item.calory, 0);
-                        const totalCarbo = Object.values(foodNutrientMap).reduce((acc, item) => acc + item.carbo, 0);
-                        const totalProtein = Object.values(foodNutrientMap).reduce((acc, item) => acc + item.protein, 0);
-                        const totalFat = Object.values(foodNutrientMap).reduce((acc, item) => acc + item.fat, 0);
-                        const totalSugar = Object.values(foodNutrientMap).reduce((acc, item) => acc + item.sugar, 0);
-
-                        // 총 섭취량 바 그래프 업데이트
-                        const caloriePercentage = Math.round((totalCalories / 2000) * 100);
-                        document.getElementById('total-calories-bar').style.width = caloriePercentage + '%';
-                        document.getElementById('calorie-text').innerText = `${totalCalories} / 1800 kcal (${caloriePercentage}%)`;
-
-                        // 도넛 차트 생성 함수
-                        const createSemiDonutChart = (ctx, data, backgroundColor, percentageId, percentageValue) => {
+                        const createDonutChart = (ctx, value, max, color, label) => {
                             new Chart(ctx, {
                                 type: 'doughnut',
                                 data: {
                                     labels: ['섭취량', '잔여량'],
                                     datasets: [{
-                                        data: data,
-                                        backgroundColor: backgroundColor,
-                                        borderWidth: 0,
+                                        data: [value, Math.max(0, max - value)],
+                                        backgroundColor: [color, '#D3D3D3'],
                                     }]
                                 },
                                 options: {
-                                    rotation: -90,
-                                    circumference: 180,
                                     responsive: true,
-                                    cutout: '70%',
                                     plugins: {
                                         legend: {
                                             display: false,
                                         },
-                                    }
+                                    },
+                                    circumference: 180,
+                                    rotation: -90,
                                 }
                             });
-                            document.getElementById(percentageId).innerText = percentageValue + '%';
+                            document.getElementById(label).innerText += ' ' + Math.round((value / max) * 100) + '%';
                         };
 
-                        // 탄수화물 도넛 차트
-                        createSemiDonutChart(
+                        createDonutChart(
                             document.getElementById('carbo-donut-chart').getContext('2d'),
-                            [totalCarbo, 269 - totalCarbo],
-                            ['#A0522D', '#D3D3D3'],
-                            'carbo-percentage',
-                            Math.round((totalCarbo / 269) * 100)
+                            /* 탄수화물 값 */ [[${totalCarbo != null ? totalCarbo : 0}]],
+                            269,
+                            '#A0522D',
+                            'carbo-percentage'
                         );
 
-                        // 단백질 도넛 차트
-                        createSemiDonutChart(
+                        createDonutChart(
                             document.getElementById('protein-donut-chart').getContext('2d'),
-                            [totalProtein, 83 - totalProtein],
-                            ['#B22222', '#D3D3D3'],
-                            'protein-percentage',
-                            Math.round((totalProtein / 83) * 100)
+                            /* 단백질 값 */ [[${totalProtein != null ? totalProtein : 0}]],
+                            83,
+                            '#B22222',
+                            'protein-percentage'
                         );
 
-                        // 지방 도넛 차트
-                        createSemiDonutChart(
+                        createDonutChart(
                             document.getElementById('fat-donut-chart').getContext('2d'),
-                            [totalFat, 50 - totalFat],
-                            ['#FF8C00', '#D3D3D3'],
-                            'fat-percentage',
-                            Math.round((totalFat / 50) * 100)
+                            /* 지방 값 */ [[${totalFat != null ? totalFat : 0}]],
+                            50,
+                            '#FF8C00',
+                            'fat-percentage'
                         );
 
-                        // 당류 도넛 차트
-                        createSemiDonutChart(
+                        createDonutChart(
                             document.getElementById('sugar-donut-chart').getContext('2d'),
-                            [totalSugar, 25 - totalSugar],
-                            ['#FFD700', '#D3D3D3'],
-                            'sugar-percentage',
-                            Math.round((totalSugar / 25) * 100)
+                            /* 당류 값 */ [[${totalSugar != null ? totalSugar : 0}]],
+                            25,
+                            '#FFD700',
+                            'sugar-percentage'
                         );
                     });
                 </script>
@@ -260,18 +124,19 @@
                         <td th:text="${entry.value.fat}"></td>
                         <td th:text="${entry.value.sugar}"></td>
                     </tr>
-                    <tr class="sum-row" th:if="${foodNutrientMap != null and !foodNutrientMap.isEmpty()}">
+                    <tr th:if="${foodNutrientMap != null && !foodNutrientMap.isEmpty()}">
                         <td>합계</td>
-                        <td>-</td>
-                        <td th:text="${#numbers.sum(foodNutrientMap.values().![calory])}"></td>
-                        <td th:text="${#numbers.sum(foodNutrientMap.values().![carbo])}"></td>
-                        <td th:text="${#numbers.sum(foodNutrientMap.values().![protein])}"></td>
-                        <td th:text="${#numbers.sum(foodNutrientMap.values().![fat])}"></td>
-                        <td th:text="${#numbers.sum(foodNutrientMap.values().![sugar])}"></td>
+                        <td></td>
+                        <td th:text="${totalCalory != null ? totalCalory : 0}"></td>
+                        <td th:text="${totalCarbo != null ? totalCarbo : 0}"></td>
+                        <td th:text="${totalProtein != null ? totalProtein : 0}"></td>
+                        <td th:text="${totalFat != null ? totalFat : 0}"></td>
+                        <td th:text="${totalSugar != null ? totalSugar : 0}"></td>
                     </tr>
                 </table>
             </div>
         </div>
+
     </div>
 </main>
 </body>
