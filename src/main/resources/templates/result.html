@@ -19,13 +19,12 @@
             <div class="result-chart-container">
                 <h2 class="result-header">총 섭취량</h2>
                 <div class="bar-chart-container">
-                    <div class="bar-chart" th:style="${totalCalory != null ? ('width: ' + (totalCalory / 2000.0 * 100) + '%') : 'width: 0%'}"></div>
+                    <div class="bar-chart" th:style="${totalCalory != null ? (totalCalory >= 2000 ? 'width: 100%; background-color: red;' : ('width: ' + (totalCalory / 2000.0 * 100) + '%; background-color: #0A6E0A;')) : 'width: 0%'}"></div>
+
                     <div class="calorie-text">
                         <span th:text="${totalCalory != null ? totalCalory : 0}"></span> / 2000 kcal (<span th:text="${totalCalory != null ? T(java.lang.String).format('%.1f', (totalCalory / 2000.0 * 100)) : '0.0'}"></span>%)
                     </div>
                 </div>
-
-                <h2 class="result-header">영양소 비율 (하루 권장량 대비 섭취량)</h2>
                 <div class="chart-group">
                     <div class="chart-container">
                         <canvas id="carbo-donut-chart"></canvas>
@@ -138,6 +137,7 @@
         </div>
 
     </div>
+
 </main>
 </body>
 </html>
