@@ -1,5 +1,7 @@
 package pnu.project.smartplate.controller;
 
+import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,14 +9,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import pnu.project.smartplate.model.FoodInfo;
+import pnu.project.smartplate.model.FoodNutrient;
 import pnu.project.smartplate.service.FoodAnalysisService;
 
+@Slf4j
 @Controller
 public class FoodAnalysisController {
 
     private final FoodAnalysisService foodAnalysisService;
 
+    private Map<String, FoodNutrient> foodMap;
+    private String fileName;
 
     @Autowired
     public FoodAnalysisController(FoodAnalysisService foodAnalysisService) {
@@ -37,7 +42,27 @@ public class FoodAnalysisController {
     }
 
     @GetMapping("/result")
-    public String showResult() {
+    public String showResult(Model model) {
+        log.info(fileName);
+        model.addAttribute("foodNutrientMap", foodMap);
+        model.addAttribute("imageName", fileName);
+
+        // 합계 계산
+        if (foodMap != null && !foodMap.isEmpty()) {
+            double totalCalory = foodMap.values().stream().mapToDouble(FoodNutrient::getCalory).sum();
+            double totalCarbo = foodMap.values().stream().mapToDouble(FoodNutrient::getCarbo).sum();
+            double totalProtein = foodMap.values().stream().mapToDouble(FoodNutrient::getProtein).sum();
+            double totalFat = foodMap.values().stream().mapToDouble(FoodNutrient::getFat).sum();
+            double totalSugar = foodMap.values().stream().mapToDouble(FoodNutrient::getSugar).sum();
+
+            // 모델에 합계 값 추가
+            model.addAttribute("totalCalory", totalCalory);
+            model.addAttribute("totalCarbo", totalCarbo);
+            model.addAttribute("totalProtein", totalProtein);
+            model.addAttribute("totalFat", totalFat);
+            model.addAttribute("totalSugar", totalSugar);
+        }
+
         return "result";
     }
 
@@ -46,11 +71,10 @@ public class FoodAnalysisController {
         if (!imageFile.isEmpty()) {
             try {
                 // 이미지 저장
-                String fileName = foodAnalysisService.saveImg(imageFile);
+                fileName = foodAnalysisService.saveImg(imageFile);
                 // 분석 수행
-                FoodInfo foodInfo = foodAnalysisService.analyzeImage(fileName);
-
-                model.addAttribute("foodInfo", foodInfo);
+                foodMap = foodAnalysisService.analyzeImage(fileName);
+                log.info(foodMap.toString());
                 return "result";
             } catch (Exception e) {
                 System.out.println(e.getMessage());

@@ -1,83 +1,178 @@
+/* result.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
 body {
-  font-family: 'Arial', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #f8f9fa;
-  color: #343a40;
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
 }
 
-.container {
-  width: 80%;
-  max-width: 600px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+.result-main {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-h1 {
-  color: #495057;
-  margin-bottom: 20px;
+.result-container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
 }
 
-p {
-  margin: 10px 0;
+.result-text-container {
+    text-align: center;
 }
 
-#analyzed-food, #food-calories, #food-nutrients {
-  font-weight: bold;
-  color: #007bff;
+.result-header {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #343a40;
+}
+.bar-chart-container{
+    background-color: #D3D3D3; height: 30px; border-radius: 15px; position: relative
 }
 
-#search-input {
-  width: calc(100% - 20px);
-  padding: 10px;
-  margin: 20px 0;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  font-size: 16px;
+.chart-group{
+    display: flex;
+    justify-content:
+    space-between;
+    align-items: center;
+}
+.chart-container{
+    width:100px;
+    height:100px;
+
+}
+.result-image-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.result-header{
+    margin-top: 60px;
+}
+.result-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
 }
 
-#search-results {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
-  max-height: 200px;
-  overflow-y: auto;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 60px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-#search-results li {
-  padding: 10px;
-  cursor: pointer;
-  border-bottom: 1px solid #ced4da;
+table, th, td {
+    border: 1px solid #ddd;
 }
 
-#search-results li:last-child {
-  border-bottom: none;
+th, td {
+    padding: 12px;
+    text-align: left;
+    transition: background-color 0.3s;
 }
 
-#search-results li:hover {
-  background-color: #e9ecef;
+th {
+    background-color: #0A6E0A;
+    color: #fff;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 20px;
+td {
+    background-color: #f9f9f9;
 }
 
-button:hover {
-  background-color: #0056b3;
+td:hover {
+    background-color: #f1f1f1;
+}
+
+.sum-row {
+    font-weight: bold;
+    background-color: #f0f0f0;
+}
+
+.bar-chart {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    background-color: #0A6E0A ;
+    border-radius: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.bar-chart div:first-child {
+    position: absolute;
+    height: 100%;
+    background-color: #343a40;
+    border-radius: 15px;
+}
+
+.bar-chart div:last-child {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #000;
+    font-weight: bold;
+}
+
+.nutrient-chart-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.nutrient-chart-container div {
+    text-align: center;
+}
+
+.nutrient-chart-container div div {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.nutrient-chart-container p {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .result-main {
+        padding: 10px;
+    }
+
+    .result-header {
+        font-size: 1.5rem;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    th, td {
+        padding: 8px;
+    }
 }

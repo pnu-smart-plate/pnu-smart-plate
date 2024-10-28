@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Food Analyzer</title>
-  <link th:href="@{./style/index.css}" rel="stylesheet"/>
-  <script th:src="@{./javascript/index.es6}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNU-Smart-Plate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{./style/index.css}">
+    <style>
+
+    </style>
 </head>
 <body>
-<main>
-  <section class="container">
-    <div class="header">사진 업로드</div>
-    <div class="image-container" id="imageContainer">이미지 미리보기</div>
-    <div class="options">
-      <div class="option" onclick="document.getElementById('fileInput').click()">
-        이미지 선택 <span>→</span>
-      </div>
-      <a class="btn btn-primary" href="upload">음식 사진 업로드</a>
+<h1 class="header" style="text-align: center;">PNU-Smart-Plate</h1>
+<main role="main">
+    <div class="container" style="align-content: center; align-items: center; align-self: center">
+        <div style="font-size: 20px">
+
+        </div>
+        <div id="imageContainer" class="image-container">
+            이미지 미리보기
+        </div>
+        <div class="options">
+            <div class="button" onclick="document.getElementById('fileInput').click()">
+                <i class="fas fa-image"></i> <!-- picture 아이콘 -->
+            </div>
+            <a href="upload" class="button">
+                <i class="fas fa-arrow-right"></i> <!-- arrow-right 아이콘 -->
+            </a>
+        </div>
     </div>
-  </section>
-
-  <section class="preview">
-    <!-- 미리보기 섹션 내용 -->
-  </section>
+    <div class="preview"></div>
 </main>
-
-<input type="file" id="fileInput" class="hidden-input" accept="image/*"
-       onchange="uploadFile(event)">
-
+<input type="file" id="fileInput" class="hidden-input" onchange="uploadFile(event)" accept="image/*">
+<script th:src="@{./javascript/index.es6}"></script>
 </body>
 </html>
-

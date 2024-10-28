@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 @Getter
 public class FoodNutrient {
-    private String Name;
+    private String name;
     private double amount;
     private double calory;
     private double carbo; // 탄수화물

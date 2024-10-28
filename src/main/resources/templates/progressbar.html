@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>사진 분석중...</title>
   <link rel="stylesheet" th:href="@{./style/progressbar.css}">
@@ -9,12 +10,11 @@
 </head>
 <body>
 <div class="container">
-  <h1>사진 분석중...</h1>
+  <h1 id="status-header">사진 분석중...</h1>
   <div class="progressbar">
     <div></div>
   </div>
   <div id="status">잠시만 기다려주세요...</div>
 </div>
-
 </body>
 </html>
